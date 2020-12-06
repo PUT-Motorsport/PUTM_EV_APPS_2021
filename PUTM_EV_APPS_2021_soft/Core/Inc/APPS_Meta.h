@@ -11,8 +11,8 @@
 #define APPS_CAN_ID 0x0A
 #define APPS_CAN_DLC 2
 
-#define APPS_RAW_MIN 400
-#define APPS_RAW_MAX 3000
+#define APPS_RAW_MIN 1600
+#define APPS_RAW_MAX 3700
 
 #define APPS_REAL_MAX 500
 

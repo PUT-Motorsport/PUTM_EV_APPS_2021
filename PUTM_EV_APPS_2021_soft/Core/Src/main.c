@@ -161,10 +161,8 @@ int main(void)
 	  {
 		  adc_cpl_flag = 0;
 	  }
-	  send_CAN_frame = 1;
-	  HAL_Delay(10);
 
-	  if(send_CAN_frame){
+	  if(send_CAN_frame == 1){
 		  send_CAN_frame = 0;
 
 		  apps_temp_1 = 0;
@@ -189,6 +187,9 @@ int main(void)
 		  if (HAL_CAN_AddTxMessage(&hcan, &tx_header_apps_data, apps_data, &mail_data_apps) != HAL_OK){
 				HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, 0);
 		  }
+		  while(HAL_CAN_IsTxMessagePending(&hcan, mail_data_apps));
+		  apps_data[0] = 0;
+		  apps_data[1] = 0;
 	  }
 
 
@@ -228,7 +229,7 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
