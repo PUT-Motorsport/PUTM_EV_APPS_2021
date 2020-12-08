@@ -22,6 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
 #include "APPS_Meta.h"
 
 /* USER CODE END Includes */
@@ -57,13 +58,17 @@ CAN_FilterTypeDef sFilterConfig;
 uint8_t send_CAN_frame;
 uint16_t apps_val_raw[100];
 
-uint16_t apps_temp_1 = 0;
-uint16_t apps_temp_2 = 0;
+uint32_t apps_temp_1 = 0;
+uint32_t apps_temp_2 = 0;
+uint16_t apps_temp_temp = 0;
+uint16_t apps_temp_temp2 = 0;
 
 uint8_t apps_data[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 uint8_t adc_cpl_flag = 0;
-float factor = 0.0f;
+
+float factor_1 = 0.0f;
+float factor_2 = 0.0f;
 
 /* USER CODE END PV */
 
@@ -134,7 +139,8 @@ int main(void)
   tx_header_apps_data.TransmitGlobalTime = DISABLE;
   uint32_t mail_data_apps = 0;
 
-  factor = (float)(((float)APPS_RAW_MAX - (float)APPS_RAW_MIN) / APPS_REAL_MAX);
+  factor_1 = (float)(((float)APPS_1_RAW_MAX - (float)APPS_1_RAW_MIN) / APPS_REAL_MAX);
+  factor_2 = (float)(((float)APPS_2_RAW_MAX - (float)APPS_2_RAW_MIN) / APPS_REAL_MAX);
 
   // INIT OTHER STUFF
 
@@ -145,6 +151,7 @@ int main(void)
 
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)apps_val_raw, 100);
   HAL_TIM_Base_Start(&htim3);
+  HAL_TIM_Base_Start_IT(&htim2);
 
 	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, 1);
 	HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, 1);
@@ -176,10 +183,32 @@ int main(void)
 		  apps_temp_1 = apps_temp_1 / 50;
 		  apps_temp_2 = apps_temp_2 / 50;
 
-		  apps_temp_1 = (apps_temp_1 - APPS_RAW_MIN) / factor;
-		  apps_temp_2 = (apps_temp_2 - APPS_RAW_MIN) / factor;
+		  /*
+		   * check if APPS is not broken:
+		   * 	- apps_read < APPS_RAW_MIN - 100
+		   * 	- apps_read > APPS_RAW_MAX + 100
+		   *
+		   * */
 
-		  if(apps_temp_1 /* something */ ){}
+		  apps_temp_temp = apps_temp_1;
+		  apps_temp_temp2 = apps_temp_2;
+
+		  if (apps_temp_1 < APPS_1_RAW_MIN || apps_temp_2 < APPS_2_RAW_MIN ){
+			  apps_temp_1 = APPS_REAL_MIN;
+			  apps_temp_2 = APPS_REAL_MIN;
+		  }
+		  else if(apps_temp_1 > APPS_1_RAW_MAX || apps_temp_2 > APPS_2_RAW_MAX){
+			  apps_temp_1 = APPS_REAL_MAX;
+			  apps_temp_2 = APPS_REAL_MAX;
+		  }
+		  else{
+			  apps_temp_1 = (apps_temp_1 - APPS_1_RAW_MIN) / factor_1;
+			  apps_temp_2 = (apps_temp_2 - APPS_2_RAW_MIN) / factor_2;
+		  }
+
+		  if (abs(apps_temp_1 - apps_temp_2) > 0.1 * apps_temp_1){
+			  ;//error
+		  }
 
 		  apps_data[0] = (uint8_t)(apps_temp_1 & 0x00FF);
 		  apps_data[1] = (uint8_t)(apps_temp_1 >> 8);
@@ -515,10 +544,8 @@ void My_CAN_init(void){
 	sFilterConfig.FilterBank = 0;
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	//sFilterConfig.FilterIdHigh = 0x0A << 5;
 	sFilterConfig.FilterIdHigh = 0x0000;
 	sFilterConfig.FilterIdLow = 0x0000;
-	//sFilterConfig.FilterMaskIdHigh = 0xFFFF << 5;
 	sFilterConfig.FilterMaskIdHigh = 0x0000;
 	sFilterConfig.FilterMaskIdLow = 0x0000;
 	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
