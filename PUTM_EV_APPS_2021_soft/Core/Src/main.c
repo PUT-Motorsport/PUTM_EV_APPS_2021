@@ -164,13 +164,9 @@ int main(void)
 
   while (1)
   {
-	  if(adc_cpl_flag == 1)
-	  {
-		  adc_cpl_flag = 0;
-	  }
-
-	  if(send_CAN_frame == 1){
+	  if(send_CAN_frame == 1 && adc_cpl_flag == 1){
 		  send_CAN_frame = 0;
+		  adc_cpl_flag = 0;
 
 		  apps_temp_1 = 0;
 		  apps_temp_2 = 0;
@@ -202,20 +198,25 @@ int main(void)
 			  apps_temp_2 = APPS_REAL_MAX;
 		  }
 		  else{
-			  apps_temp_1 = (apps_temp_1 - APPS_1_RAW_MIN) / factor_1;
-			  apps_temp_2 = (apps_temp_2 - APPS_2_RAW_MIN) / factor_2;
+			  apps_temp_1 = (uint16_t)((float)(apps_temp_1 - APPS_1_RAW_MIN) / factor_1);
+			  apps_temp_2 = (uint16_t)((float)(apps_temp_2 - APPS_2_RAW_MIN) / factor_2);
 		  }
 
 		  if (abs(apps_temp_1 - apps_temp_2) > 0.1 * apps_temp_1){
 			  ;//error
 		  }
 
+		  if (apps_temp_1 > APPS_REAL_MAX)
+			  apps_temp_1 = APPS_REAL_MAX;
+
+		  if (apps_temp_2 > APPS_REAL_MAX)
+			  apps_temp_2 = APPS_REAL_MAX;
+
 		  apps_data[0] = (uint8_t)(apps_temp_1 & 0x00FF);
 		  apps_data[1] = (uint8_t)(apps_temp_1 >> 8);
+		  HAL_CAN_AddTxMessage(&hcan, &tx_header_apps_data, apps_data, &mail_data_apps);
 
-		  if (HAL_CAN_AddTxMessage(&hcan, &tx_header_apps_data, apps_data, &mail_data_apps) != HAL_OK){
-				HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, 0);
-		  }
+
 		  while(HAL_CAN_IsTxMessagePending(&hcan, mail_data_apps));
 		  apps_data[0] = 0;
 		  apps_data[1] = 0;
@@ -382,9 +383,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 1599;
+  htim2.Init.Prescaler = 3199;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 999;
+  htim2.Init.Period = 99;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -427,7 +428,7 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 1599;
+  htim3.Init.Prescaler = 63;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 99;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
