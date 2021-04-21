@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name APPS-rescue)(type Legacy)(uri ${KIPRJMOD}/APPS-rescue.lib)(options "")(descr ""))
+)

@@ -1,0 +1,361 @@
+EESchema Schematic File Version 4
+LIBS:APPS-cache
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 5 7
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:R R12
+U 1 1 606AA78D
+P 4800 2200
+F 0 "R12" V 4700 2150 50  0000 C CNN
+F 1 "4k7" V 4700 2300 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 4730 2200 50  0001 C CNN
+F 3 "~" H 4800 2200 50  0001 C CNN
+	1    4800 2200
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R16
+U 1 1 606AA793
+P 4850 3850
+F 0 "R16" V 4750 3800 50  0000 C CNN
+F 1 "4k7" V 4750 3950 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 4780 3850 50  0001 C CNN
+F 3 "~" H 4850 3850 50  0001 C CNN
+	1    4850 3850
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C C19
+U 1 1 606AA799
+P 5100 2350
+F 0 "C19" H 4900 2350 50  0000 C CNN
+F 1 "100n" H 4900 2250 50  0000 C CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 5138 2200 50  0001 C CNN
+F 3 "~" H 5100 2350 50  0001 C CNN
+	1    5100 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 2500 5100 2600
+Wire Wire Line
+	4950 2200 5100 2200
+Wire Wire Line
+	5150 4150 5150 4250
+$Comp
+L Device:C C20
+U 1 1 606AA7A9
+P 5150 4000
+F 0 "C20" H 4950 4000 50  0000 C CNN
+F 1 "100n" H 5000 3900 50  0000 C CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 5188 3850 50  0001 C CNN
+F 3 "~" H 5150 4000 50  0001 C CNN
+	1    5150 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR032
+U 1 1 606AA7C9
+P 5150 4250
+F 0 "#PWR032" H 5150 4000 50  0001 C CNN
+F 1 "GND" H 5155 4077 50  0000 C CNN
+F 2 "" H 5150 4250 50  0001 C CNN
+F 3 "" H 5150 4250 50  0001 C CNN
+	1    5150 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR029
+U 1 1 606AA7CF
+P 3550 4100
+F 0 "#PWR029" H 3550 3850 50  0001 C CNN
+F 1 "GND" H 3555 3927 50  0000 C CNN
+F 2 "" H 3550 4100 50  0001 C CNN
+F 3 "" H 3550 4100 50  0001 C CNN
+	1    3550 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR025
+U 1 1 606AA7D5
+P 3550 2450
+F 0 "#PWR025" H 3550 2200 50  0001 C CNN
+F 1 "GND" H 3555 2277 50  0000 C CNN
+F 2 "" H 3550 2450 50  0001 C CNN
+F 3 "" H 3550 2450 50  0001 C CNN
+	1    3550 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR028
+U 1 1 606AA7DB
+P 5100 2600
+F 0 "#PWR028" H 5100 2350 50  0001 C CNN
+F 1 "GND" H 5105 2427 50  0000 C CNN
+F 2 "" H 5100 2600 50  0001 C CNN
+F 3 "" H 5100 2600 50  0001 C CNN
+	1    5100 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 2200 5250 2200
+Connection ~ 5100 2200
+Text GLabel 5250 2200 2    50   Input ~ 0
+Ain0
+Text GLabel 5300 3850 2    50   Input ~ 0
+Ain1
+$Comp
+L Amplifier_Operational:MCP6001-OT U8
+U 1 1 606AA7E7
+P 4300 3850
+F 0 "U8" H 4300 4150 50  0000 L CNN
+F 1 "MCP6001-OT" H 4250 4050 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-5" H 4200 3650 50  0001 L CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21733j.pdf" H 4300 4050 50  0001 C CNN
+	1    4300 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R18
+U 1 1 606AA7ED
+P 4450 4500
+F 0 "R18" V 4350 4400 50  0000 C CNN
+F 1 "0R" V 4350 4550 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 4380 4500 50  0001 C CNN
+F 3 "~" H 4450 4500 50  0001 C CNN
+	1    4450 4500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4300 4500 3950 4500
+Wire Wire Line
+	3950 3950 4000 3950
+$Comp
+L power:GND #PWR030
+U 1 1 606AA801
+P 4200 4150
+F 0 "#PWR030" H 4200 3900 50  0001 C CNN
+F 1 "GND" H 4205 3977 50  0000 C CNN
+F 2 "" H 4200 4150 50  0001 C CNN
+F 3 "" H 4200 4150 50  0001 C CNN
+	1    4200 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR027
+U 1 1 606AA80D
+P 4150 2500
+F 0 "#PWR027" H 4150 2250 50  0001 C CNN
+F 1 "GND" H 4155 2327 50  0000 C CNN
+F 2 "" H 4150 2500 50  0001 C CNN
+F 3 "" H 4150 2500 50  0001 C CNN
+	1    4150 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R15
+U 1 1 606AA82D
+P 2750 3400
+F 0 "R15" H 2650 3350 50  0000 C CNN
+F 1 "0R" H 2650 3450 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 2680 3400 50  0001 C CNN
+F 3 "~" H 2750 3400 50  0001 C CNN
+	1    2750 3400
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR026
+U 1 1 606AA835
+P 2750 2500
+F 0 "#PWR026" H 2750 2250 50  0001 C CNN
+F 1 "GND" H 2755 2327 50  0000 C CNN
+F 2 "" H 2750 2500 50  0001 C CNN
+F 3 "" H 2750 2500 50  0001 C CNN
+	1    2750 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR031
+U 1 1 606AA83B
+P 2750 4200
+F 0 "#PWR031" H 2750 3950 50  0001 C CNN
+F 1 "GND" H 2755 4027 50  0000 C CNN
+F 2 "" H 2750 4200 50  0001 C CNN
+F 3 "" H 2750 4200 50  0001 C CNN
+	1    2750 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R13
+U 1 1 606AA846
+P 2750 2350
+F 0 "R13" H 2600 2300 50  0000 C CNN
+F 1 "0R" H 2600 2400 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 2680 2350 50  0001 C CNN
+F 3 "~" H 2750 2350 50  0001 C CNN
+	1    2750 2350
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R17
+U 1 1 606AA84C
+P 2750 4050
+F 0 "R17" H 2650 4000 50  0000 C CNN
+F 1 "220R" H 2600 4100 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 2680 4050 50  0001 C CNN
+F 3 "~" H 2750 4050 50  0001 C CNN
+	1    2750 4050
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x03 J2
+U 1 1 606AA852
+P 2550 2100
+F 0 "J2" H 2630 2142 50  0000 L CNN
+F 1 "Screw_Terminal_01x03" H 2630 2051 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-3_P5.08mm" H 2550 2100 50  0001 C CNN
+F 3 "~" H 2550 2100 50  0001 C CNN
+	1    2550 2100
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R11
+U 1 1 606AA858
+P 2750 1750
+F 0 "R11" H 2600 1700 50  0000 C CNN
+F 1 "220R" H 2600 1800 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 2680 1750 50  0001 C CNN
+F 3 "~" H 2750 1750 50  0001 C CNN
+	1    2750 1750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2750 1900 2750 2000
+$Comp
+L Connector:Screw_Terminal_01x03 J3
+U 1 1 606AA868
+P 2550 3750
+F 0 "J3" H 2630 3792 50  0000 L CNN
+F 1 "Screw_Terminal_01x03" H 2630 3701 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-3_P5.08mm" H 2550 3750 50  0001 C CNN
+F 3 "~" H 2550 3750 50  0001 C CNN
+	1    2550 3750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2750 3650 2750 3550
+$Comp
+L Amplifier_Operational:MCP6001-OT U7
+U 1 1 606AA807
+P 4250 2200
+F 0 "U7" H 4300 2500 50  0000 L CNN
+F 1 "MCP6001-OT" H 4250 2400 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-5" H 4150 2000 50  0001 L CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21733j.pdf" H 4250 2400 50  0001 C CNN
+	1    4250 2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2300 3900 2750
+Wire Wire Line
+	3950 2300 3900 2300
+$Comp
+L Device:R R14
+U 1 1 606AA817
+P 4400 2750
+F 0 "R14" V 4300 2700 50  0000 C CNN
+F 1 "0R" V 4300 2850 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 4330 2750 50  0001 C CNN
+F 3 "~" H 4400 2750 50  0001 C CNN
+	1    4400 2750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4550 2200 4600 2200
+Wire Wire Line
+	4600 2200 4600 2750
+Wire Wire Line
+	4600 2750 4550 2750
+Wire Wire Line
+	2750 3850 2750 3900
+Wire Wire Line
+	3950 3950 3950 4500
+Wire Wire Line
+	5000 3850 5150 3850
+Connection ~ 5150 3850
+Wire Wire Line
+	5150 3850 5300 3850
+Wire Wire Line
+	4600 2200 4650 2200
+Connection ~ 4600 2200
+Wire Wire Line
+	4600 3850 4650 3850
+Wire Wire Line
+	4650 3850 4650 4500
+Connection ~ 4650 3850
+Wire Wire Line
+	4650 3850 4700 3850
+Wire Wire Line
+	4650 4500 4600 4500
+$Comp
+L Device:D_TVS_x2_AAC D12
+U 1 1 606D8716
+P 3550 3750
+F 0 "D12" V 3200 3850 50  0000 L CNN
+F 1 "D_TVS_x2_AAC" V 3300 3800 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 3400 3750 50  0001 C CNN
+F 3 "~" H 3400 3750 50  0001 C CNN
+	1    3550 3750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4000 3750 3400 3750
+Wire Wire Line
+	3400 3750 2750 3750
+Connection ~ 3400 3750
+$Comp
+L Device:D_TVS_x2_AAC D11
+U 1 1 606E3078
+P 3550 2100
+F 0 "D11" V 3150 2150 50  0000 L CNN
+F 1 "D_TVS_x2_AAC" V 3250 2100 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 3400 2100 50  0001 C CNN
+F 3 "~" H 3400 2100 50  0001 C CNN
+	1    3550 2100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3900 2750 4250 2750
+Wire Wire Line
+	3950 2100 3400 2100
+Wire Wire Line
+	3400 2100 2750 2100
+Connection ~ 3400 2100
+Text GLabel 2750 1550 1    50   Input ~ 0
+3V3_POT1
+Text GLabel 3550 1700 1    50   Input ~ 0
+3V3_POT1
+Text GLabel 4150 1850 1    50   Input ~ 0
+3V3_POT1
+Text GLabel 2750 3250 1    50   Input ~ 0
+3V3_POT2
+Text GLabel 3550 3400 1    50   Input ~ 0
+3V3_POT2
+Text GLabel 4200 3550 1    50   Input ~ 0
+3V3_POT2
+Text Notes 5050 3150 0    50   ~ 0
+Low pass filters are designed for cutoff frequency fc=338[Hz]
+Wire Wire Line
+	2750 1550 2750 1600
+$EndSCHEMATC
