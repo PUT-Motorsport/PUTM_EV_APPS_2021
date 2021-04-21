@@ -94,58 +94,6 @@ Connection ~ 2950 3150
 Text GLabel 2950 2800 1    50   Input ~ 0
 3V3_SYS
 $Comp
-L Mechanical:MountingHole H?
-U 1 1 6078282E
-P 2350 1050
-AR Path="/6078282E" Ref="H?"  Part="1" 
-AR Path="/6077B773/6078282E" Ref="H1"  Part="1" 
-F 0 "H1" H 2450 1096 50  0000 L CNN
-F 1 "MountingHole" H 2450 1005 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 2350 1050 50  0001 C CNN
-F 3 "~" H 2350 1050 50  0001 C CNN
-	1    2350 1050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H?
-U 1 1 60782834
-P 2350 1250
-AR Path="/60782834" Ref="H?"  Part="1" 
-AR Path="/6077B773/60782834" Ref="H2"  Part="1" 
-F 0 "H2" H 2450 1296 50  0000 L CNN
-F 1 "MountingHole" H 2450 1205 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 2350 1250 50  0001 C CNN
-F 3 "~" H 2350 1250 50  0001 C CNN
-	1    2350 1250
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H?
-U 1 1 6078283A
-P 2350 1450
-AR Path="/6078283A" Ref="H?"  Part="1" 
-AR Path="/6077B773/6078283A" Ref="H3"  Part="1" 
-F 0 "H3" H 2450 1496 50  0000 L CNN
-F 1 "MountingHole" H 2450 1405 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 2350 1450 50  0001 C CNN
-F 3 "~" H 2350 1450 50  0001 C CNN
-	1    2350 1450
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H?
-U 1 1 60782840
-P 2350 1650
-AR Path="/60782840" Ref="H?"  Part="1" 
-AR Path="/6077B773/60782840" Ref="H4"  Part="1" 
-F 0 "H4" H 2450 1696 50  0000 L CNN
-F 1 "MountingHole" H 2450 1605 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 2350 1650 50  0001 C CNN
-F 3 "~" H 2350 1650 50  0001 C CNN
-	1    2350 1650
-	1    0    0    -1  
-$EndComp
-$Comp
 L Connector:Screw_Terminal_01x02 J?
 U 1 1 607E201F
 P 2850 3950
