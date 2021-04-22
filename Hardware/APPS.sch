@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:APPS-cache
-EELAYER 29 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -410,8 +409,6 @@ Text GLabel 5500 4950 2    50   Input ~ 0
 SWDIO
 Text GLabel 5500 5050 2    50   Input ~ 0
 SWCLK
-Text GLabel 5500 4750 2    50   Input ~ 0
-CAN_RX
 Wire Wire Line
 	3250 2550 3250 2300
 Connection ~ 3750 2550
@@ -550,10 +547,8 @@ NoConn ~ 4200 4850
 NoConn ~ 4200 4750
 NoConn ~ 4200 4650
 NoConn ~ 4200 4550
-NoConn ~ 4200 4350
-NoConn ~ 4200 4250
-NoConn ~ 4200 4150
-NoConn ~ 4200 4050
+NoConn ~ 5500 4050
+NoConn ~ 5500 3950
 NoConn ~ 4200 3950
 NoConn ~ 4200 3850
 NoConn ~ 4200 3750
@@ -581,14 +576,18 @@ Wire Notes Line
 	7050 2550 7050 3800
 Text Notes 7850 2700 0    50   ~ 0
 Debugging Diodes
-Text GLabel 5500 4650 2    50   Input ~ 0
+Text GLabel 4200 4350 0    50   Input ~ 0
 BT_RX
-Text GLabel 5500 4550 2    50   Input ~ 0
+Text GLabel 4200 4250 0    50   Input ~ 0
 BT_TX
 Text GLabel 5500 4150 2    50   Input ~ 0
 Led1
-Text GLabel 5500 3950 2    50   Input ~ 0
+Text GLabel 4200 4050 0    50   Input ~ 0
 BT_KEY
-Text GLabel 5500 4050 2    50   Input ~ 0
+Text GLabel 4200 4150 0    50   Input ~ 0
 BT_LED
+NoConn ~ 5500 4550
+NoConn ~ 5500 4650
+Text GLabel 5500 4750 2    50   Input ~ 0
+CAN_RX
 $EndSCHEMATC
