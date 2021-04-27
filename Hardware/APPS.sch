@@ -546,7 +546,7 @@ NoConn ~ 4200 4950
 NoConn ~ 4200 4850
 NoConn ~ 4200 4750
 NoConn ~ 4200 4650
-NoConn ~ 4200 4550
+NoConn ~ 4200 4150
 NoConn ~ 5500 4050
 NoConn ~ 5500 3950
 NoConn ~ 4200 3950
@@ -584,7 +584,7 @@ Text GLabel 5500 4150 2    50   Input ~ 0
 Led1
 Text GLabel 4200 4050 0    50   Input ~ 0
 BT_KEY
-Text GLabel 4200 4150 0    50   Input ~ 0
+Text GLabel 4200 4550 0    50   Input ~ 0
 BT_LED
 NoConn ~ 5500 4550
 NoConn ~ 5500 4650

@@ -59,11 +59,11 @@ F 3 "~" H 4130 4920 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Connection ~ 3730 4120
-Text GLabel 6630 3170 2    50   Input ~ 0
-BT_RX
-Text GLabel 6630 3270 2    50   Input ~ 0
-BT_TX
 Text GLabel 6630 3070 2    50   Input ~ 0
+BT_RX
+Text GLabel 6630 3170 2    50   Input ~ 0
+BT_TX
+Text GLabel 6630 3470 2    50   Input ~ 0
 BT_KEY
 $Comp
 L Device:R_Small R20
@@ -145,12 +145,12 @@ BT_LED
 $Comp
 L power:GND #PWR034
 U 1 1 606BEA53
-P 6630 3370
-F 0 "#PWR034" H 6630 3120 50  0001 C CNN
-F 1 "GND" V 6630 3220 50  0000 R CNN
-F 2 "" H 6630 3370 50  0001 C CNN
-F 3 "" H 6630 3370 50  0001 C CNN
-	1    6630 3370
+P 6630 3270
+F 0 "#PWR034" H 6630 3020 50  0001 C CNN
+F 1 "GND" V 6630 3130 50  0000 R CNN
+F 2 "" H 6630 3270 50  0001 C CNN
+F 3 "" H 6630 3270 50  0001 C CNN
+	1    6630 3270
 	0    -1   -1   0   
 $EndComp
 Text GLabel 6630 2970 2    50   Input ~ 0
@@ -167,7 +167,7 @@ Wire Wire Line
 	6280 2970 6630 2970
 Text GLabel 4780 4720 2    50   Input ~ 0
 3V3_SYS
-Text GLabel 6630 3470 2    50   Input ~ 0
+Text GLabel 6630 3370 2    50   Input ~ 0
 3V3_SYS
 $Comp
 L Device:R_Small R21
