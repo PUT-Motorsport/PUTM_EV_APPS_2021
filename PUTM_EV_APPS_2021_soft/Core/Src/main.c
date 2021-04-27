@@ -88,9 +88,8 @@ void My_CAN_init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-	adc_cpl_flag = 1;
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+    adc_cpl_flag = 1;
 }
 
 /* USER CODE END 0 */
@@ -131,101 +130,93 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
-  CAN_TxHeaderTypeDef tx_header_apps_data;
-  tx_header_apps_data.StdId = APPS_CAN_ID;
-  tx_header_apps_data.RTR = CAN_RTR_DATA;
-  tx_header_apps_data.IDE = CAN_ID_STD;
-  tx_header_apps_data.DLC = APPS_CAN_DLC;
-  tx_header_apps_data.TransmitGlobalTime = DISABLE;
-  uint32_t mail_data_apps = 0;
+    CAN_TxHeaderTypeDef tx_header_apps_data;
+    tx_header_apps_data.StdId = APPS_CAN_ID;
+    tx_header_apps_data.RTR = CAN_RTR_DATA;
+    tx_header_apps_data.IDE = CAN_ID_STD;
+    tx_header_apps_data.DLC = APPS_CAN_DLC;
+    tx_header_apps_data.TransmitGlobalTime = DISABLE;
+    uint32_t mail_data_apps = 0;
 
-  factor_1 = (float)(((float)APPS_1_RAW_MAX - (float)APPS_1_RAW_MIN) / APPS_REAL_MAX);
-  factor_2 = (float)(((float)APPS_2_RAW_MAX - (float)APPS_2_RAW_MIN) / APPS_REAL_MAX);
+    factor_1 = (float) (((float) APPS_1_RAW_MAX - (float) APPS_1_RAW_MIN) / APPS_REAL_MAX);
+    factor_2 = (float) (((float) APPS_2_RAW_MAX - (float) APPS_2_RAW_MIN) / APPS_REAL_MAX);
 
-  // INIT OTHER STUFF
+    // INIT OTHER STUFF
 
-  // Turn on safety
-  HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, 1);
+    // Turn on safety
+    HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, 1);
 
-  My_CAN_init();
+    My_CAN_init();
 
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)apps_val_raw, 100);
-  HAL_TIM_Base_Start(&htim3);
-  HAL_TIM_Base_Start_IT(&htim2);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *) apps_val_raw, 100);
+    HAL_TIM_Base_Start(&htim3);
+    HAL_TIM_Base_Start_IT(&htim2);
 
-	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, 1);
-	HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, 1);
-	HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, 1);
+    HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, 1);
+    HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, 1);
+    HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
 
-  while (1)
-  {
-	  if(adc_cpl_flag == 1)
-	  {
-		  adc_cpl_flag = 0;
-	  }
+    while (1) {
+        if (send_CAN_frame == 1 && adc_cpl_flag == 1) {
+            send_CAN_frame = 0;
+            adc_cpl_flag = 0;
 
-	  if(send_CAN_frame == 1){
-		  send_CAN_frame = 0;
+            apps_temp_1 = 0;
+            apps_temp_2 = 0;
 
-		  apps_temp_1 = 0;
-		  apps_temp_2 = 0;
+            for (int i = 0; i < 100; i = i + 2) {
+                apps_temp_1 += apps_val_raw[i];
+                apps_temp_2 += apps_val_raw[i + 1];
+            }
 
-		  for (int i = 0 ; i < 100 ; i = i + 2){
-			  apps_temp_1 += apps_val_raw[i];
-			  apps_temp_2 += apps_val_raw[i+1];
-		  }
+            apps_temp_1 = apps_temp_1 / 50;
+            apps_temp_2 = apps_temp_2 / 50;
 
-		  apps_temp_1 = apps_temp_1 / 50;
-		  apps_temp_2 = apps_temp_2 / 50;
+            apps_temp_temp = apps_temp_1;
+            apps_temp_temp2 = apps_temp_2;
 
-		  /*
-		   * check if APPS is not broken:
-		   * 	- apps_read < APPS_RAW_MIN - 100
-		   * 	- apps_read > APPS_RAW_MAX + 100
-		   *
-		   * */
+            if (apps_temp_1 < APPS_1_RAW_MIN || apps_temp_2 < APPS_2_RAW_MIN) {
+                apps_temp_1 = APPS_REAL_MIN;
+                apps_temp_2 = APPS_REAL_MIN;
+            } else if (apps_temp_1 > APPS_1_RAW_MAX || apps_temp_2 > APPS_2_RAW_MAX) {
+                apps_temp_1 = APPS_REAL_MAX;
+                apps_temp_2 = APPS_REAL_MAX;
+            } else {
+                apps_temp_1 = (uint16_t) ((float) (apps_temp_1 - APPS_1_RAW_MIN) / factor_1);
+                apps_temp_2 = (uint16_t) ((float) (apps_temp_2 - APPS_2_RAW_MIN) / factor_2);
+            }
 
-		  apps_temp_temp = apps_temp_1;
-		  apps_temp_temp2 = apps_temp_2;
+            if (abs(apps_temp_1 - apps_temp_2) > 0.1 * apps_temp_1) {
+                apps_temp_1 = 0;
+                apps_temp_2 = 0;
+            }
 
-		  if (apps_temp_1 < APPS_1_RAW_MIN || apps_temp_2 < APPS_2_RAW_MIN ){
-			  apps_temp_1 = APPS_REAL_MIN;
-			  apps_temp_2 = APPS_REAL_MIN;
-		  }
-		  else if(apps_temp_1 > APPS_1_RAW_MAX || apps_temp_2 > APPS_2_RAW_MAX){
-			  apps_temp_1 = APPS_REAL_MAX;
-			  apps_temp_2 = APPS_REAL_MAX;
-		  }
-		  else{
-			  apps_temp_1 = (apps_temp_1 - APPS_1_RAW_MIN) / factor_1;
-			  apps_temp_2 = (apps_temp_2 - APPS_2_RAW_MIN) / factor_2;
-		  }
+            if (apps_temp_1 > APPS_REAL_MAX)
+                apps_temp_1 = APPS_REAL_MAX;
 
-		  if (abs(apps_temp_1 - apps_temp_2) > 0.1 * apps_temp_1){
-			  ;//error
-		  }
+            if (apps_temp_2 > APPS_REAL_MAX)
+                apps_temp_2 = APPS_REAL_MAX;
 
-		  apps_data[0] = (uint8_t)(apps_temp_1 & 0x00FF);
-		  apps_data[1] = (uint8_t)(apps_temp_1 >> 8);
+            apps_data[0] = (uint8_t) (apps_temp_1 & 0x00FF);
+            apps_data[1] = (uint8_t) (apps_temp_1 >> 8);
+            HAL_CAN_AddTxMessage(&hcan, &tx_header_apps_data, apps_data, &mail_data_apps);
 
-		  if (HAL_CAN_AddTxMessage(&hcan, &tx_header_apps_data, apps_data, &mail_data_apps) != HAL_OK){
-				HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, 0);
-		  }
-		  while(HAL_CAN_IsTxMessagePending(&hcan, mail_data_apps));
-		  apps_data[0] = 0;
-		  apps_data[1] = 0;
-	  }
+
+            while (HAL_CAN_IsTxMessagePending(&hcan, mail_data_apps));
+            apps_data[0] = 0;
+            apps_data[1] = 0;
+        }
 
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+    }
   /* USER CODE END 3 */
 }
 
@@ -540,32 +531,29 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void My_CAN_init(void){
-	sFilterConfig.FilterBank = 0;
-	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterIdHigh = 0x0000;
-	sFilterConfig.FilterIdLow = 0x0000;
-	sFilterConfig.FilterMaskIdHigh = 0x0000;
-	sFilterConfig.FilterMaskIdLow = 0x0000;
-	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
-	sFilterConfig.FilterActivation = ENABLE;
-	sFilterConfig.SlaveStartFilterBank = 14;
+void My_CAN_init(void) {
+    sFilterConfig.FilterBank = 0;
+    sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+    sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+    sFilterConfig.FilterIdHigh = 0x0000;
+    sFilterConfig.FilterIdLow = 0x0000;
+    sFilterConfig.FilterMaskIdHigh = 0x0000;
+    sFilterConfig.FilterMaskIdLow = 0x0000;
+    sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
+    sFilterConfig.FilterActivation = ENABLE;
+    sFilterConfig.SlaveStartFilterBank = 14;
 
-	if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK)
-	{
-		Error_Handler();
-	}
+    if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK) {
+        Error_Handler();
+    }
 
-	if (HAL_CAN_Start(&hcan) != HAL_OK)
-	{
-		Error_Handler();
-	}
+    if (HAL_CAN_Start(&hcan) != HAL_OK) {
+        Error_Handler();
+    }
 
-	if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_TX_MAILBOX_EMPTY) != HAL_OK)
-	{
-		Error_Handler();
-	}
+    if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_TX_MAILBOX_EMPTY) != HAL_OK) {
+        Error_Handler();
+    }
 }
 /* USER CODE END 4 */
 
@@ -576,7 +564,7 @@ void My_CAN_init(void){
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+    /* User can add his own implementation to report the HAL error return state */
 //	HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, 0);
 //	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, 1);
 //	HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, 1);
