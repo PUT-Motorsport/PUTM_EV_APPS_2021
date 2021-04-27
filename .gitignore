@@ -64,3 +64,6 @@ dkms.conf
 *.zip
 apps_pomiar
 
+.idea/
+CMakeList*
+cmake-build-debug/
