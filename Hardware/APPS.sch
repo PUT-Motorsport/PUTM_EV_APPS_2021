@@ -545,8 +545,6 @@ NoConn ~ 4200 5050
 NoConn ~ 4200 4950
 NoConn ~ 4200 4850
 NoConn ~ 4200 4750
-NoConn ~ 4200 4650
-NoConn ~ 4200 4150
 NoConn ~ 5500 4050
 NoConn ~ 5500 3950
 NoConn ~ 4200 3950
@@ -576,18 +574,20 @@ Wire Notes Line
 	7050 2550 7050 3800
 Text Notes 7850 2700 0    50   ~ 0
 Debugging Diodes
-Text GLabel 4200 4350 0    50   Input ~ 0
-BT_RX
-Text GLabel 4200 4250 0    50   Input ~ 0
-BT_TX
 Text GLabel 5500 4150 2    50   Input ~ 0
 Led1
-Text GLabel 4200 4050 0    50   Input ~ 0
-BT_KEY
-Text GLabel 4200 4550 0    50   Input ~ 0
-BT_LED
 NoConn ~ 5500 4550
 NoConn ~ 5500 4650
 Text GLabel 5500 4750 2    50   Input ~ 0
 CAN_RX
+Text GLabel 4200 4550 0    50   Input ~ 0
+BT_KEY
+NoConn ~ 4200 4650
+Text GLabel 4200 4250 0    50   Input ~ 0
+BT_RX
+Text GLabel 4200 4350 0    50   Input ~ 0
+BT_TX
+NoConn ~ 4200 4150
+Text GLabel 4200 4050 0    50   Input ~ 0
+BT_LED
 $EndSCHEMATC
