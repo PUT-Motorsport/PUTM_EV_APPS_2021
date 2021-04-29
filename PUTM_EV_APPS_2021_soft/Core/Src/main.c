@@ -60,8 +60,8 @@ uint16_t apps_val_raw[100];
 
 uint32_t apps_temp_1 = 0;
 uint32_t apps_temp_2 = 0;
-uint16_t apps_temp_temp = 0;
-uint16_t apps_temp_temp2 = 0;
+uint16_t apps_temp_temp_1 = 0;
+uint16_t apps_temp_temp_2 = 0;
 
 uint8_t apps_data[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
@@ -145,8 +145,8 @@ int main(void) {
     tx_header_apps_data.TransmitGlobalTime = DISABLE;
     uint32_t mail_data_apps = 0;
 
-    factor_1 = (float) (((float) APPS_1_RAW_MAX - (float) APPS_1_RAW_MIN) / APPS_REAL_MAX);
-    factor_2 = (float) (((float) APPS_2_RAW_MAX - (float) APPS_2_RAW_MIN) / APPS_REAL_MAX);
+    factor_1 = (float) (((float) APPS_1_RAW_MAX - (float) APPS_1_RAW_MIN) / (float) APPS_REAL_MAX);
+    factor_2 = (float) (((float) APPS_2_RAW_MAX - (float) APPS_2_RAW_MIN) / (float) APPS_REAL_MAX);
 
     // INIT OTHER STUFF
 
@@ -183,16 +183,12 @@ int main(void) {
 
             apps_temp_1 = apps_temp_1 / 50;
             apps_temp_2 = apps_temp_2 / 50;
-
             /*
              * check if APPS is not broken:
              * 	- apps_read < APPS_RAW_MIN - 100
              * 	- apps_read > APPS_RAW_MAX + 100
              *
              * */
-
-            apps_temp_temp = apps_temp_1;
-            apps_temp_temp2 = apps_temp_2;
 
             if (apps_temp_1 < APPS_1_RAW_MIN || apps_temp_2 < APPS_2_RAW_MIN) {
                 apps_temp_1 = APPS_REAL_MIN;
@@ -205,9 +201,17 @@ int main(void) {
                 apps_temp_2 = (uint16_t) ((float) (apps_temp_2 - APPS_2_RAW_MIN) / factor_2);
             }
 
-            if (abs(apps_temp_1 - apps_temp_2) > 0.1 * apps_temp_1) {
+            apps_temp_temp_1 = apps_temp_1;
+            apps_temp_temp_2 = apps_temp_2;
+
+            // TODO change magic number
+            if ((abs(apps_temp_2 - apps_temp_1)) > apps_temp_1 * 0.1) {
                 apps_temp_1 = 0;
                 apps_temp_2 = 0;
+                HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, 0);
+            }
+            else{
+                HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, 1);
             }
 
             if (apps_temp_1 > APPS_REAL_MAX)
