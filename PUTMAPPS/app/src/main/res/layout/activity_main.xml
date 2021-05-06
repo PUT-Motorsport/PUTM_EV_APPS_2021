@@ -123,15 +123,6 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Button
-            android:id="@+id/program2"
-            android:layout_width="128dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:backgroundTint="#DF710E"
-            android:text="Program 2" />
-
-        <Button
             android:id="@+id/program1"
             android:layout_width="124dp"
             android:layout_height="match_parent"
@@ -139,6 +130,15 @@
             android:layout_weight="1"
             android:backgroundTint="#DF710E"
             android:text="Program 1" />
+
+        <Button
+            android:id="@+id/program2"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="#DF710E"
+            android:text="Program 2" />
 
         <Button
             android:id="@+id/program3"
