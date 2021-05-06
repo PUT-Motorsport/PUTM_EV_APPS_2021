@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int X = 0;
     private int Y = 0;
-    private int X_before = 0;
-    private int Y_before = 0;
     private int X_absolute;
 
     ArrayList<Object> voltage = new ArrayList<>();
@@ -143,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
                                           runOnUiThread((Runnable) () -> {
                                               if (bluetooth.IsConnected()) {
                                                   if (bluetooth.BytesAvailableToReceive() > 0) {
-                                                      X_before = (Integer) X;
-                                                      Y_before = (Integer) Y;
                                                       X = (Integer) (X + 1);
                                                       Y = (Integer) bluetooth.ReceiveUnsigned1ByteNumber();
                                                       X_absolute = (Integer) (X + 1);
