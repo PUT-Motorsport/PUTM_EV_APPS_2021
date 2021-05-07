@@ -10,10 +10,12 @@
     <Button
         android:id="@+id/savecsv"
         android:layout_width="313dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="25dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#2196F3"
         android:text="Save to CSV"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +118,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,30 +126,39 @@
 
         <Button
             android:id="@+id/program1"
-            android:layout_width="124dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:backgroundTint="#DF710E"
-            android:text="Program 1" />
+            android:text="Program 1"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/program2"
-            android:layout_width="128dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:backgroundTint="#DF710E"
-            android:text="Program 2" />
+            android:text="Program 2"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/program3"
-            android:layout_width="127dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:backgroundTint="#DF710E"
-            android:text="Program 3" />
+            android:text="Program 3"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
@@ -165,20 +176,33 @@
 
     <com.google.android.material.slider.Slider
         android:id="@+id/continuousslider"
-        android:layout_width="332dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="340dp"
+        android:layout_height="56dp"
         android:stepSize="10"
         android:value="90"
         android:valueFrom="50"
         android:valueTo="90"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/savecsv"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0"
         app:thumbColor="#2196F3"
         app:tickColorActive="#232323"
         app:tickColorInactive="#232323"
         app:trackColorActive="#DF710E"
         app:trackColorInactive="#DF710E" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="35dp"
+        android:text="Set sampling frequency:"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/continuousslider"
+        app:layout_constraintTop_toBottomOf="@+id/savecsv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
