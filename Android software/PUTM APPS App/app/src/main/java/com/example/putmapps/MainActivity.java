@@ -41,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private LineGraphSeries<DataPoint> series;
 
-    private int X = 0;
+    private double X = 0;
     private int Y = 0;
-    private int X_absolute;
 
     ArrayList<Object> voltage = new ArrayList<>();
     ArrayList<Object> time = new ArrayList<>();
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         viewport.setScrollable(true);
         viewport.setXAxisBoundsManual(true);
         viewport.setMinX(0);
-        viewport.setMaxX(240);
+        viewport.setMaxX(20);
         viewport.setScalable(false);
 
         //Timer Event
@@ -139,14 +138,14 @@ public class MainActivity extends AppCompatActivity {
                                           runOnUiThread((Runnable) () -> {
                                               if (bluetooth.IsConnected()) {
                                                   if (bluetooth.BytesAvailableToReceive() > 0) {
-                                                      X = (Integer) (X + 1);
                                                       Y = (Integer) bluetooth.ReceiveUnsigned1ByteNumber();
-                                                      X_absolute = (Integer) (X + 1);
                                                       voltageValueText.setText(String.valueOf(Math.round(((double) Y / 51) * 10000000d) / 10000000d));
                                                       voltage.add(Math.round(((double) Y / 51) * 10000000d) / 10000000d);
-                                                      time.add(X_absolute);
+
                                                   }
-                                                  series.appendData(new DataPoint(X_absolute, (double) Y / 51), true, 3000);
+                                                  X = (X + 0.025);
+                                                  time.add(X);
+                                                  series.appendData(new DataPoint(X, (double) Y / 51), true, 3000);
                                                   graph.onDataChanged(true, true);
                                               }
                                           });
