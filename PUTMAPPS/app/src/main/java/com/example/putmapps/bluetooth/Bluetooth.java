@@ -125,6 +125,35 @@ public class Bluetooth {
         }
     }
 
+    public void Send2ByteNumber(String number) {
+
+        int n;
+        try {
+            n = Integer.decode(number);
+        } catch (NumberFormatException var5) {
+
+            return;
+        }
+
+        byte[] bytes = new byte[2];
+        if (this.byteOrder == ByteOrder.BIG_ENDIAN) {
+            bytes[1] = (byte)(n & 255);
+            n >>= 8;
+            bytes[0] = (byte)(n & 255);
+        } else {
+            bytes[0] = (byte)(n & 255);
+            n >>= 8;
+            bytes[1] = (byte)(n & 255);
+        }
+
+        n >>= 8;
+        if (n != 0 && n != -1) {
+
+        } else {
+            this.write(bytes);
+        }
+    }
+
     protected void write(byte[] bytes) {
         if (!this.IsConnected()) {
 

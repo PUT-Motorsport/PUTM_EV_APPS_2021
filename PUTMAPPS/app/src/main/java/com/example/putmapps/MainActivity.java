@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
-                bluetooth.SendText(String.valueOf(slider.getValue()));
+                bluetooth.SendText(String.valueOf((int) slider.getValue()/100));
             }
         };
 
@@ -98,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         program1Button.setOnClickListener(v -> {
-            bluetooth.SendText("1");
+            bluetooth.SendText("a");
         });
 
         program2Button.setOnClickListener(v -> {
-            bluetooth.SendText("2");
+            bluetooth.SendText("b");
         });
 
         program3Button.setOnClickListener(v -> {
-            bluetooth.SendText("3");
+            bluetooth.SendText("c");
         });
 
         saveToCSVButton.setOnClickListener(v -> {
@@ -116,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
             voltage.clear();
             Toast.makeText(getApplicationContext(), "CSV saved to " + MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/data.csv", Toast.LENGTH_SHORT).show();
         });
-
-
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         series = new LineGraphSeries<>();
@@ -148,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
                                                       voltage.add(Math.round(((double) Y / 51) * 10000000d) / 10000000d);
                                                       time.add(X_absolute);
                                                   }
-                                                  series.appendData(new DataPoint(X_absolute, (double) Y / 51), true, 1000);
+                                                  series.appendData(new DataPoint(X_absolute, (double) Y / 51), true, 3000);
                                                   graph.onDataChanged(true, true);
                                               }
                                           });
                                       }
                                   },
-                0, 100);
+                0, 50);
     }
 
     public void writeFile(String text, boolean append) {
