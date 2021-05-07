@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
-                bluetooth.SendText(String.valueOf((int) slider.getValue()/100));
+                bluetooth.SendText(String.valueOf((int) slider.getValue() / 10));
             }
         };
 
@@ -136,13 +136,16 @@ public class MainActivity extends AppCompatActivity {
                                       @Override
                                       public void run() {
                                           runOnUiThread((Runnable) () -> {
+
                                               if (bluetooth.IsConnected()) {
+
                                                   if (bluetooth.BytesAvailableToReceive() > 0) {
-                                                      Y = (Integer) bluetooth.ReceiveUnsigned1ByteNumber();
+                                                      Y = bluetooth.ReceiveUnsigned1ByteNumber();
                                                       voltageValueText.setText(String.valueOf(Math.round(((double) Y / 51) * 10000000d) / 10000000d));
                                                       voltage.add(Math.round(((double) Y / 51) * 10000000d) / 10000000d);
 
                                                   }
+
                                                   X = (X + 0.025);
                                                   time.add(X);
                                                   series.appendData(new DataPoint(X, (double) Y / 51), true, 3000);
@@ -151,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                                           });
                                       }
                                   },
-                0, 50);
+                0, 25);
     }
 
     public void writeFile(String text, boolean append) {

@@ -1,6 +1,6 @@
 int in = A0;
 int Incoming_value = 0;
-int del = 200;
+int del = 100;
 
 void setup() {
   Serial.begin(9600);
@@ -38,7 +38,7 @@ void loop() {
     }
     
     if(Incoming_value < 90){
-      del = (Incoming_value - 48) * 100;
+      del = (Incoming_value - 48) * 10;
     }
   }      
 }
