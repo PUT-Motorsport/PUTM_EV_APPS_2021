@@ -322,7 +322,7 @@ $EndComp
 Wire Wire Line
 	4000 3750 3400 3750
 Wire Wire Line
-	3400 3750 2750 3750
+	3400 3750 3150 3750
 Connection ~ 3400 3750
 $Comp
 L Device:D_TVS_x2_AAC D11
@@ -340,7 +340,7 @@ Wire Wire Line
 Wire Wire Line
 	3950 2100 3400 2100
 Wire Wire Line
-	3400 2100 2750 2100
+	3400 2100 3150 2100
 Connection ~ 3400 2100
 Text GLabel 2750 1550 1    50   Input ~ 0
 3V3_POT1
@@ -358,4 +358,54 @@ Text Notes 5050 3150 0    50   ~ 0
 Low pass filters are designed for cutoff frequency fc=338[Hz]
 Wire Wire Line
 	2750 1550 2750 1600
+$Comp
+L Device:R_Small R23
+U 1 1 60AC6F3F
+P 3150 2200
+F 0 "R23" H 3209 2246 50  0000 L CNN
+F 1 "100k" H 3209 2155 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 3150 2200 50  0001 C CNN
+F 3 "~" H 3150 2200 50  0001 C CNN
+	1    3150 2200
+	1    0    0    -1  
+$EndComp
+Connection ~ 3150 2100
+Wire Wire Line
+	3150 2100 2750 2100
+$Comp
+L power:GND #PWR0102
+U 1 1 60AC767D
+P 3150 2300
+F 0 "#PWR0102" H 3150 2050 50  0001 C CNN
+F 1 "GND" H 3155 2127 50  0000 C CNN
+F 2 "" H 3150 2300 50  0001 C CNN
+F 3 "" H 3150 2300 50  0001 C CNN
+	1    3150 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R24
+U 1 1 60AC7E5A
+P 3150 3850
+F 0 "R24" H 3209 3896 50  0000 L CNN
+F 1 "100k" H 3209 3805 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 3150 3850 50  0001 C CNN
+F 3 "~" H 3150 3850 50  0001 C CNN
+	1    3150 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 60AC7E60
+P 3150 3950
+F 0 "#PWR0103" H 3150 3700 50  0001 C CNN
+F 1 "GND" H 3155 3777 50  0000 C CNN
+F 2 "" H 3150 3950 50  0001 C CNN
+F 3 "" H 3150 3950 50  0001 C CNN
+	1    3150 3950
+	1    0    0    -1  
+$EndComp
+Connection ~ 3150 3750
+Wire Wire Line
+	3150 3750 2750 3750
 $EndSCHEMATC
