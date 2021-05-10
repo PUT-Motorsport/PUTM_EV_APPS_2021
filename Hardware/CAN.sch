@@ -1,5 +1,6 @@
 EESchema Schematic File Version 4
-EELAYER 30 0
+LIBS:APPS-cache
+EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -99,12 +100,12 @@ Wire Wire Line
 $Comp
 L Device:R_Small R8
 U 1 1 5F6105D7
-P 7700 2500
-F 0 "R8" H 7759 2546 50  0000 L CNN
-F 1 "120R" H 7759 2455 50  0000 L CNN
-F 2 "Resistor_SMD:R_1206_3216Metric" H 7700 2500 50  0001 C CNN
-F 3 "~" H 7700 2500 50  0001 C CNN
-	1    7700 2500
+P 7700 2700
+F 0 "R8" H 7759 2746 50  0000 L CNN
+F 1 "120R" H 7759 2655 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 7700 2700 50  0001 C CNN
+F 3 "~" H 7700 2700 50  0001 C CNN
+	1    7700 2700
 	1    0    0    -1  
 $EndComp
 Text GLabel 7850 2100 2    50   Input ~ 0
@@ -112,27 +113,13 @@ CAN_H
 Text GLabel 7850 2900 2    50   Input ~ 0
 CAN_L
 Wire Wire Line
-	7850 2100 7700 2100
-Wire Wire Line
 	7150 2100 7150 2400
 Wire Wire Line
 	7150 2400 6800 2400
 Wire Wire Line
-	7850 2900 7700 2900
-Wire Wire Line
 	7150 2900 7150 2600
 Wire Wire Line
 	7150 2600 6800 2600
-Wire Wire Line
-	7700 2100 7700 2400
-Connection ~ 7700 2100
-Wire Wire Line
-	7700 2100 7400 2100
-Wire Wire Line
-	7700 2600 7700 2900
-Connection ~ 7700 2900
-Wire Wire Line
-	7700 2900 7400 2900
 $Comp
 L Device:D_TVS_x2_AAC D9
 U 1 1 5F611EB6
@@ -167,4 +154,31 @@ F 3 "" H 7550 2500 50  0001 C CNN
 $EndComp
 Text GLabel 5150 2350 1    50   Input ~ 0
 3V3_SYS
+Wire Wire Line
+	7400 2900 7700 2900
+Wire Wire Line
+	7400 2100 7700 2100
+$Comp
+L Device:Jumper_NC_Small JP1
+U 1 1 609989C6
+P 7700 2400
+F 0 "JP1" V 7654 2474 50  0000 L CNN
+F 1 "Jumper_NC_Small" V 7745 2474 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 7700 2400 50  0001 C CNN
+F 3 "~" H 7700 2400 50  0001 C CNN
+	1    7700 2400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7700 2900 7700 2800
+Connection ~ 7700 2900
+Wire Wire Line
+	7700 2900 7850 2900
+Wire Wire Line
+	7700 2600 7700 2500
+Wire Wire Line
+	7700 2300 7700 2100
+Connection ~ 7700 2100
+Wire Wire Line
+	7700 2100 7850 2100
 $EndSCHEMATC

@@ -1,5 +1,6 @@
 EESchema Schematic File Version 4
-EELAYER 30 0
+LIBS:APPS-cache
+EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -343,9 +344,9 @@ Wire Wire Line
 Connection ~ 3400 2100
 Text GLabel 2750 1550 1    50   Input ~ 0
 3V3_POT1
-Text GLabel 3550 1700 1    50   Input ~ 0
+Text GLabel 3550 1750 1    50   Input ~ 0
 3V3_POT1
-Text GLabel 4150 1850 1    50   Input ~ 0
+Text GLabel 4150 1900 1    50   Input ~ 0
 3V3_POT1
 Text GLabel 2750 3250 1    50   Input ~ 0
 3V3_POT2
