@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.example.putmapps.bluetooth.Bluetooth;
 import com.google.android.material.slider.Slider;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -25,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
 
     Timer timer;
 
-    private LineGraphSeries<DataPoint> series;
+    private LineGraphSeries<DataPoint> series1;
+    private LineGraphSeries<DataPoint> series2;
 
     private double X = 0;
-    private int Y = 0;
+    private int Y1 = 0;
+    private int Y2 = 0;
+    private int dX = 90;
 
-    ArrayList<Object> voltage = new ArrayList<>();
+    ArrayList<Object> voltage1 = new ArrayList<>();
+    ArrayList<Object> voltage2 = new ArrayList<>();
     ArrayList<Object> time = new ArrayList<>();
 
     @Override
@@ -62,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         saveToCSVButton = findViewById(R.id.savecsv);
 
-        TextView voltageValueText = findViewById(R.id.voltage);
+        TextView voltage1ValueText = findViewById(R.id.voltage1);
+        TextView voltage2ValueText = findViewById(R.id.voltage2);
 
         TextView isConnectedText = findViewById(R.id.connectedtext);
 
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
+                dX = (int) slider.getValue();
                 bluetooth.SendText(String.valueOf((int) slider.getValue() / 10));
             }
         };
@@ -109,16 +115,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
         saveToCSVButton.setOnClickListener(v -> {
-            writeFile(voltage.toString().replaceAll("\\[|\\]",""), false);
+            writeFile(voltage1.toString().replaceAll("\\[|\\]",""), false);
+            writeFile("\n", true);
+            writeFile(voltage2.toString().replaceAll("\\[|\\]",""), true);
             writeFile("\n", true);
             writeFile(time.toString().replaceAll("\\[|\\]",""), true);
-            voltage.clear();
+            voltage1.clear();
+            voltage2.clear();
+            time.clear();
             Toast.makeText(getApplicationContext(), "CSV saved to " + MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/data.csv", Toast.LENGTH_SHORT).show();
         });
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        series = new LineGraphSeries<>();
-        graph.addSeries(series);
+
+        series1 = new LineGraphSeries<>();
+        graph.addSeries(series1);
+        series1.setColor(Color.RED);
+
+        series2 = new LineGraphSeries<>();
+        graph.addSeries(series2);
+        series2.setColor(Color.GREEN);
 
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(0);
@@ -140,26 +156,34 @@ public class MainActivity extends AppCompatActivity {
 
                                       @Override
                                       public void run() {
-                                          runOnUiThread((Runnable) () -> {
 
-                                              if (bluetooth.IsConnected()) {
+                                          if (bluetooth.IsConnected()) {
+                                              if (bluetooth.BytesAvailableToReceive() > 0) {
+                                                  Y1 = bluetooth.read(2)[0] & 255;
+                                                  Y2 = bluetooth.read(2)[1] & 255;
 
-                                                  if (bluetooth.BytesAvailableToReceive() > 0) {
-                                                      Y = bluetooth.ReceiveUnsigned1ByteNumber();
-                                                      voltageValueText.setText(String.valueOf(Math.round(((double) Y / 51) * 10000000d) / 10000000d));
-                                                      voltage.add(Math.round(((double) Y / 51) * 10000000d) / 10000000d);
+                                                  X = (X + dX * 0.002);
 
-                                                  }
-
-                                                  X = (X + 0.025);
+                                                  voltage1.add(Math.round(((double) Y1 / 51) * 100000d) / 100000d);
+                                                  voltage2.add(Math.round(((double) Y2 / 51) * 100000d) / 100000d);
                                                   time.add(X);
-                                                  series.appendData(new DataPoint(X, (double) Y / 51), true, 3000);
-                                                  graph.onDataChanged(true, true);
+                                                  
+                                                  runOnUiThread((Runnable) () -> {
+
+                                                      voltage1ValueText.setText(String.valueOf(Math.round(((double) Y1 / 51) * 100000d) / 100000d));
+                                                      voltage2ValueText.setText(String.valueOf(Math.round(((double) Y2 / 51) * 100000d) / 100000d));
+
+                                                      series1.appendData(new DataPoint(X, (double) Y1 / 51), true, 400);
+                                                      series2.appendData(new DataPoint(X, (double) Y2 / 51), true, 400);
+
+                                                      graph.onDataChanged(true, true);
+
+                                                  });
                                               }
-                                          });
+                                          }
                                       }
                                   },
-                0, 25);
+                0, 50);
     }
 
     public void writeFile(String text, boolean append) {
@@ -198,5 +222,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    
 
 }

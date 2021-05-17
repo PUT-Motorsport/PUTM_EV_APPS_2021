@@ -197,54 +197,53 @@ public class Bluetooth {
     }
 
     public int ReceiveUnsigned1ByteNumber() {
-        byte[] bytes = this.read();
+        byte[] bytes = this.read(1);
         return bytes.length != 1 ? 0 : bytes[0] & 255;
     }
 
-    protected final byte[] read() {
+    public int ReceiveUnsigned2ByteNumber() {
+        byte[] bytes = this.read( 2);
+        if (bytes.length != 2) {
+            return 0;
+        } else {
+            return this.byteOrder == ByteOrder.BIG_ENDIAN ? bytes[1] & 255 | (bytes[0] & 255) << 8 : bytes[0] & 255 | (bytes[1] & 255) << 8;
+        }
+    }
+
+    public String ReceiveText(int numberOfBytes) {
+        byte[] bytes = this.read(numberOfBytes);
+
+        try {
+            return numberOfBytes < 0 ? new String(bytes, 0, bytes.length - 1, this.encoding) : new String(bytes, this.encoding);
+        } catch (UnsupportedEncodingException var4) {
+            return new String(bytes);
+        }
+
+    }
+
+    public final byte[] read(int numberOfBytes) {
         if (!this.IsConnected()) {
 
             return new byte[0];
         } else {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            if (1 >= 0) {
-                byte[] bytes = new byte[1];
+            if (numberOfBytes >= 0) {
+                byte[] bytes = new byte[numberOfBytes];
                 int totalBytesRead = 0;
 
-                while(totalBytesRead < 1) {
+                while(totalBytesRead < numberOfBytes) {
                     try {
                         int numBytesRead = this.inputStream.read(bytes, totalBytesRead, bytes.length - totalBytesRead);
                         if (numBytesRead == -1) {
-
                             break;
                         }
-
                         totalBytesRead += numBytesRead;
                     } catch (IOException var7) {
-
                         break;
                     }
                 }
 
                 buffer.write(bytes, 0, totalBytesRead);
-            } else {
-                while(true) {
-                    try {
-                        int value = this.inputStream.read();
-                        if (value == -1) {
-
-                            break;
-                        }
-
-                        buffer.write(value);
-                        if (value == this.delimiter) {
-                            break;
-                        }
-                    } catch (IOException var8) {
-
-                        break;
-                    }
-                }
             }
 
             return buffer.toByteArray();
