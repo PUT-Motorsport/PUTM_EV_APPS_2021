@@ -164,9 +164,11 @@ public class MainActivity extends AppCompatActivity {
 
                                                   X = (X + dX * 0.002);
 
-                                                  voltage1.add(Math.round(((double) Y1 / 51) * 100000d) / 100000d);
-                                                  voltage2.add(Math.round(((double) Y2 / 51) * 100000d) / 100000d);
-                                                  time.add(X);
+                                                  if (time.size() < 1000) {
+                                                      voltage1.add(Math.round(((double) Y1 / 51) * 100000d) / 100000d);
+                                                      voltage2.add(Math.round(((double) Y2 / 51) * 100000d) / 100000d);
+                                                      time.add(X);
+                                                  }
                                                   
                                                   runOnUiThread((Runnable) () -> {
 
