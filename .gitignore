@@ -27,3 +27,7 @@ fp-info-cache
 # Exported BOM files
 *.xml
 *.csv
+
+Hardware/PUTM_EV_APPS_2021_GERBERS
+
+*.zip
