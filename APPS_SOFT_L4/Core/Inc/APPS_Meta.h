@@ -36,14 +36,14 @@ uint32_t mail_data_apps = 0;
 
 
 // const for apps sensor 1
-const int APPS_1_RAW_MIN = 1610;
-const int APPS_1_RAW_MAX = 3445;
+const int APPS_1_RAW_MIN = 716;
+const int APPS_1_RAW_MAX = 1660;
 static_assert(APPS_1_RAW_MIN < APPS_1_RAW_MAX);
 const int APPS_1_RAW_FULLSCALE = APPS_1_RAW_MAX - APPS_1_RAW_MIN;
 
 // const for apps sensor 2
-const int APPS_2_RAW_MIN = 1620;
-const int APPS_2_RAW_MAX = 4020;
+const int APPS_2_RAW_MIN = 938;
+const int APPS_2_RAW_MAX = 1890;
 static_assert(APPS_2_RAW_MIN < APPS_2_RAW_MAX);
 const int APPS_2_RAW_FULLSCALE = APPS_2_RAW_MAX - APPS_2_RAW_MIN;
 

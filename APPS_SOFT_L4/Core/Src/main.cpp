@@ -190,23 +190,31 @@ int main(void)
 
 			// clamping real values
 			int apps_temp_1 = std::clamp( apps_real_1, APPS_REAL_MIN, APPS_REAL_MAX);
-			[[maybe_unused]] int apps_temp_2 = std::clamp(apps_real_2, APPS_REAL_MIN, APPS_REAL_MAX);
+			int apps_temp_2 = std::clamp(apps_real_2, APPS_REAL_MIN, APPS_REAL_MAX);
+
+			// get average value of two sensors
+			int apps_temp = (apps_temp_1 + apps_temp_2) / 2;
 
 			// non linear curve
-			int apps_value_to_send = apps_nonlinear_curve(apps_temp_1, APPS_map_profile::APPS_MAP_1_linear);
+			int apps_value_to_send = apps_nonlinear_curve(apps_temp, APPS_map_profile::APPS_MAP_1_linear);
 
 			// send data
-			send_apps_value(apps_value_to_send);
+			//send_apps_value(apps_value_to_send);
 
 			// FIXME
 			if constexpr(debug_flag){
 				debug_data[0] = apps_avg_1;
 				debug_data[1] = apps_avg_2;
+
 				debug_data[2] = apps_real_1;
 				debug_data[3] = apps_real_2;
+
 				debug_data[4] = apps_temp_1;
-				debug_data[4] = apps_temp_2;
-				debug_data[5] = apps_value_to_send;
+				debug_data[5] = apps_temp_2;
+
+				debug_data[6] = apps_temp;
+
+				debug_data[7] = apps_value_to_send;
 			}
 
 
