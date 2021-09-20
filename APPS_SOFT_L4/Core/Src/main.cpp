@@ -18,7 +18,7 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <APPS_Meta.h>
+#include <APPS_Meta.hpp>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -153,6 +153,8 @@ int main(void)
 	HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
 
+	HAL_Delay(100);
+
 	bool sensor_plausibility_last = true;
 	/* USER CODE END 2 */
 
@@ -167,7 +169,7 @@ int main(void)
 			auto [apps_avg_1, apps_avg_2] = get_raw_avg_apps_value();
 
 			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
-				!state && !sensor_plausibility_last)
+				!state && !sensor_plausibility_last )
 			{
 				// turn led on
 				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
@@ -185,11 +187,11 @@ int main(void)
 			}
 
 			// range calculation
-			int apps_real_1 =  (int) std::round( ( (float)apps_avg_1 - (float)APPS_1_RAW_MIN) / scale_factor_1);
-			int apps_real_2 =  (int) std::round( ( (float)apps_avg_2 - (float)APPS_2_RAW_MIN) / scale_factor_2);
+			int apps_real_1 =  (int) std::round( ( (float)apps_avg_1 - (float)APPS_1_OFFSETTED_MIN) / scale_factor_1);
+			int apps_real_2 =  (int) std::round( ( (float)apps_avg_2 - (float)APPS_2_OFFSETTED_MIN) / scale_factor_2);
 
 			// clamping real values
-			int apps_temp_1 = std::clamp( apps_real_1, APPS_REAL_MIN, APPS_REAL_MAX);
+			int apps_temp_1 = std::clamp(apps_real_1, APPS_REAL_MIN, APPS_REAL_MAX);
 			int apps_temp_2 = std::clamp(apps_real_2, APPS_REAL_MIN, APPS_REAL_MAX);
 
 			// get average value of two sensors
@@ -199,7 +201,7 @@ int main(void)
 			int apps_value_to_send = apps_nonlinear_curve(apps_temp, APPS_map_profile::APPS_MAP_1_linear);
 
 			// send data
-			//send_apps_value(apps_value_to_send);
+			send_apps_value(apps_value_to_send);
 
 			// FIXME
 			if constexpr(debug_flag){
@@ -212,7 +214,7 @@ int main(void)
 				debug_data[4] = apps_temp_1;
 				debug_data[5] = apps_temp_2;
 
-				debug_data[6] = apps_temp;
+				//debug_data[6] = apps_temp;
 
 				debug_data[7] = apps_value_to_send;
 			}
@@ -645,8 +647,8 @@ bool get_sensors_plausibility(int apps_raw_value_1, int apps_raw_value_2){
 	 */
 
 	// fraction of full scale position
-	float apps_scaled_1 = ((float)apps_raw_value_1 - (float)APPS_1_RAW_MIN) / (float)APPS_1_RAW_FULLSCALE;
-	float apps_scaled_2 = ((float)apps_raw_value_2 - (float)APPS_2_RAW_MIN) / (float)APPS_2_RAW_FULLSCALE;
+	float apps_scaled_1 = ((float)apps_raw_value_1 - (float)APPS_1_OFFSETTED_MIN) / (float)APPS_1_RAW_FULLSCALE;
+	float apps_scaled_2 = ((float)apps_raw_value_2 - (float)APPS_2_OFFSETTED_MIN) / (float)APPS_2_RAW_FULLSCALE;
 
 	if( fabsf(apps_scaled_1 - apps_scaled_2) > sensor_implausibility_factor){
 		return false;
