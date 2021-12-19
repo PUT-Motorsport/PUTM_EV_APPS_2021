@@ -73,7 +73,7 @@ uint16_t apps_val_raw[number_of_apps_sample];
 // FIXME variable to debug
 const bool debug_flag = true;
 int debug_data[10];
-
+float diff_debug_data;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -136,8 +136,6 @@ int main(void)
 	MX_TIM2_Init();
 	MX_TIM3_Init();
 	/* USER CODE BEGIN 2 */
-
-
 	// INIT OTHER STUFF
 
 	// Turn on safety
@@ -650,7 +648,12 @@ bool get_sensors_plausibility(int apps_raw_value_1, int apps_raw_value_2){
 	float apps_scaled_1 = ((float)apps_raw_value_1 - (float)APPS_1_OFFSETTED_MIN) / (float)APPS_1_RAW_FULLSCALE;
 	float apps_scaled_2 = ((float)apps_raw_value_2 - (float)APPS_2_OFFSETTED_MIN) / (float)APPS_2_RAW_FULLSCALE;
 
-	if( fabsf(apps_scaled_1 - apps_scaled_2) > sensor_implausibility_factor){
+	float diff = fabsf(apps_scaled_1 - apps_scaled_2);
+
+	debug_data[9] = diff;
+	diff_debug_data = diff;
+
+	if( diff > sensor_implausibility_factor){
 		return false;
 	}
 	else{
