@@ -451,6 +451,15 @@
     (uuid facb0614-068b-4c9c-a466-d374df96a94c)
   )
 
+  (label "VO_POT1" (at 142.748 119.38 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 4d85f808-f136-4c50-92c9-7be177d979ad)
+  )
+  (label "VO_POT2" (at 142.494 147.32 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid cefe7773-4efc-4aaf-a68c-0f775c985aa9)
+  )
+
   (hierarchical_label "3V3_POT1" (shape output) (at 168.275 119.38 0)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 589e56a6-6a43-4d5f-ad65-9bd93e50b06b)
