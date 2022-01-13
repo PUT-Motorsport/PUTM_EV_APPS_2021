@@ -2256,7 +2256,7 @@
   (symbol (lib_id "power:GND") (at 108.712 103.124 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 28838aac-4a1a-4e91-8bb0-3d45a9f7ebd6)
-    (property "Reference" "#PWR?" (id 0) (at 108.712 109.474 0)
+    (property "Reference" "#PWR0104" (id 0) (at 108.712 109.474 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 108.712 107.95 0))
@@ -2337,7 +2337,7 @@
   (symbol (lib_id "power:GND") (at 108.712 92.964 180) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid b89b3558-d9f3-47e1-8e7a-97def224ca45)
-    (property "Reference" "#PWR?" (id 0) (at 108.712 86.614 0)
+    (property "Reference" "#PWR0112" (id 0) (at 108.712 86.614 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 108.712 87.63 0))
@@ -2581,6 +2581,9 @@
     (path "/00000000-0000-0000-0000-00006068dc5c/00000000-0000-0000-0000-000060ac7e60"
       (reference "#PWR0103") (unit 1) (value "GND") (footprint "")
     )
+    (path "/28838aac-4a1a-4e91-8bb0-3d45a9f7ebd6"
+      (reference "#PWR0104") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006077b773/44472129-bd20-46c2-b1dc-dee4f42bb80c"
       (reference "#PWR0105") (unit 1) (value "GND") (footprint "")
     )
@@ -2602,14 +2605,11 @@
     (path "/00000000-0000-0000-0000-00006077b773/19768f2f-1e95-477c-97b8-06e4b42f3896"
       (reference "#PWR0111") (unit 1) (value "+24V") (footprint "")
     )
+    (path "/b89b3558-d9f3-47e1-8e7a-97def224ca45"
+      (reference "#PWR0112") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006077b773/012aa115-78f4-4360-89f6-ee7ebc873f86"
       (reference "#PWR0113") (unit 1) (value "+5V") (footprint "")
-    )
-    (path "/28838aac-4a1a-4e91-8bb0-3d45a9f7ebd6"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/b89b3558-d9f3-47e1-8e7a-97def224ca45"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005f620a2c"
       (reference "C1") (unit 1) (value "100nF") (footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder")
