@@ -451,15 +451,6 @@
     (uuid facb0614-068b-4c9c-a466-d374df96a94c)
   )
 
-  (label "3V3_POT2" (at 147.828 147.32 90)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 1a48e228-dc38-4dc0-8f79-3e658fca5e9f)
-  )
-  (label "3V3_POT1" (at 147.828 119.38 90)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid f150922a-a71c-45bd-8c4e-85993119dd8d)
-  )
-
   (hierarchical_label "3V3_POT1" (shape output) (at 168.275 119.38 0)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 589e56a6-6a43-4d5f-ad65-9bd93e50b06b)
